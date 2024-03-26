@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f1f1f1;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+        background-color: purple; /* Changed color to purple */
+        padding: 10px 0;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    nav a:hover {
+        background-color: #555;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+    }
+
+    .left {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .right {
+        flex: 1;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .details {
+        margin-bottom: 20px;
+    }
+
+    .details p {
+        margin: 5px 0;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: purple;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .button.post {
+        background-color: purple;
+    }
+
+    .button:hover {
+        background-color: purple;
+    }
+   
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
+</head>
+<body>
+    {% block home %}
+    <nav>
+        <a href="http://127.0.0.1:8000/postgram/mainhome/">Home</a>
+        <a href="http://127.0.0.1:8000/postgram/profile/">Profile</a>
+        <a href="http://127.0.0.1:8000/postgram/view_posts/">Posts</a>
+        <a href="http://127.0.0.1:8000/postgram/edit_profile/">Edit Profile</a>
+        <a href="http://127.0.0.1:8000/postgram/logout/">Logout</a>
+    </nav>
+
+
+<div class="container">
+    <div class="left">
+        <h2>My Profile</h2>
+        <div class="details">
+            <p><strong>Username:</strong> {{user.username}}</p>
+            <p><strong>Email:</strong> {{user.email}}</p>
+            <p><strong>First Name:</strong> {{user.first_name}}</p>
+            <p><strong>Last Name:</strong> {{user.last_name}}</p>
+            <!-- Add more details as needed -->
+        </div>
+        <a href="http://127.0.0.1:8000/postgram/change_password/" class="button">Change Password</a>
+        <a href="http://127.0.0.1:8000/postgram/add_post/" class="button">Add a Post</a>
+    
+    </div>
+   
+    <div class="pagination">
+        <a href="http://127.0.0.1:8000/postgram/view_posts/">&laquo;</a>
+        <a href="http://127.0.0.1:8000/postgram/view_posts/">1</a>
+        <a class="active" href="http://127.0.0.1:8000/postgram/edit_profile/">2</a>
+        <a href="http://127.0.0.1:8000/postgram/edit_profile/">&raquo;</a>
+      </div>
+</div>
+
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Posts</title>
+<style>
+    .back-button {
+        margin-top:50px;
+        margin-left:20px;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color:purple;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .back-button:hover {
+        background-color: purple;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f1f1f1;
+        display: flex; /* Use flexbox to align items horizontally */
+        justify-content: center; /* Center content horizontally */
+        align-items: flex-start; /* Align items to the top */
+        min-height: 100vh; /* Set minimum height to fill the viewport */
+    }
+
+    .container {
+        display: flex; /* Use flexbox for container */
+        max-width: 1200px;
+        margin: 60px auto;
+        width: 100%;
+    }
+
+    .profile {
+        flex: 1; /* Take up 1/4 of the container width */
+        margin-right: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .posts {
+        flex: 3; /* Take up 3/4 of the container width */
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .post {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 3px;
+        background-color: #f9f9f9;
+    }
+
+    .post h2 {
+        margin-top: 0;
+    }
+
+    .post img {
+        max-width: 80%; /* Adjusted to fit the container */
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    {% comment %} .like {
+        color: red;
+    } {% endcomment %}
+
+    /* Accordion Styles */
+    .accordion {
+        background-color: #f9f9f9;
+        color: #333;
+        cursor: pointer;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        transition: 0.4s;
+    }
+
+    .accordion.active, .accordion:hover {
+        background-color: #ddd;
+    }
+
+    .panel {
+        padding: 0 10px;
+        background-color: white;
+        display: none;
+        overflow: hidden;
+    }
+
+    .panel.show {
+        display: block;
+    }
+    .posts h1 {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        color: PURPLE;
+    } 
+   
+    .post-image {
+        border: 1px solid purple; 
+        border-radius: 8px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        padding: 10px; 
+        max-width: 400px;
+        margin:0 auto; 
+    }
+    
+    .post-image p {
+        font-weight: bold; 
+        margin-bottom: 10px; 
+    }
+    
+    .post-image img {
+        max-width: 100%; 
+        border-radius: 4px; 
+    }
+    .translate-btn {
+        /* Button styles */
+        background-color: #4CAF50; /* Green background */
+        border: none; /* No border */
+        color: white; /* White text */
+        padding: 10px 20px; /* Padding */
+        text-align: center; /* Centered text */
+        text-decoration: none; /* No underline */
+        display: inline-block; /* Display as inline-block */
+        font-size: 16px; /* Font size */
+        margin: 4px 2px; /* Margin */
+        transition-duration: 0.4s; /* Transition speed */
+        cursor: pointer; /* Cursor pointer */
+        border-radius: 8px; /* Rounded corners */
+    }
+    
+    .translate-btn:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
+
+    /* Style the button */
+.accordion {
+  background-color: #f7f7f7;
+  color: #333;
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  text-align: left;
+  outline: none;
+  width: 100%;
+  transition: 0.4s;
+}
+
+/* Add hover effect */
+.accordion:hover {
+  background-color: #ddd;
+}
+
+/* Style the panel (hidden by default) */
+.panel {
+  display: none;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.panel form {
+    display: flex; /* Use flexbox layout */
+}
+
+.panel form textarea {
+    flex: 1; /* Let the textarea grow to fill the remaining space */
+    margin-right: 10px; /* Optional: Add some space between textarea and button */
+}
+
+.panel form button {
+    flex-shrink: 0; /* Prevent the button from shrinking */
+}
+
+/* Style the textarea */
+.panel textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style the submit button */
+.panel button[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Add hover effect to submit button */
+.panel button[type="submit"]:hover {
+  background-color: #45a049;
+}
+.comments-container {
+    margin-top: 20px;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    width: 40px; /* Adjust as needed */
+    height: 40px; /* Adjust as needed */
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.comment-name {
+    font-size: 1.1em; /* Adjust as needed */
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.comment-body {
+    font-size: 1em; /* Adjust as needed */
+}
+
+
+</style>
+</head>
+<body>
+    <nav>
+        <!-- Back button to go to profile page -->
+        <button class="back-button" onclick="window.location.href = 'http://127.0.0.1:8000/postgram/profile/';">Back to Profile</button>
+    
+        <!-- Rest of your HTML content -->
+    </nav>
+<div class="container">
+   
+    <!-- Posts Section -->
+    <div class="posts">
+        <h1>POSTS</h1>
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post {% if current_post and current_post.id == post.id %}highlight{% endif %}">
+                    
+                    <h2>Posted By: {{ post.author }}</h2>
+
+                    <div class="post-image">
+                        <p>Title '{{ post.title }}'</p>
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="Post Image">
+                        {% endif %}
+                    </div>
+                    
+                    <p>{{ post.content }}</p>
+                    <!-- Accordion for Comments -->
+                    <button class="accordion">Comments</button>
+                    <div class="panel">
+                        <!-- Comment Form -->
+                        <form action="{% url 'add_comment' post.id %}" method="post">
+                            {% csrf_token %}
+                            <textarea name="body" placeholder="Add a comment"></textarea>
+                            <button type="submit">Add Comment</button>
+                        </form>
+
+                        {% if post.comments.all %}
+                        <div class="comments-container">
+                            <h3>Comments:</h3>
+                                <ul>
+                                    {% for comment in post.comments.all %}
+        
+                                        <div class="comment">
+                                            <div class="avatar">
+                                                <img src="/static/avatar_img.jpg" alt="Avatar">
+                                            </div>
+                                            <div class="comment-content">
+                                                <span class="comment-name">{{ comment.name }}</span>
+                                                <span class="comment-body">{{ comment.body }}</span>
+                                            </div>
+                                            <button class="translate-btn" data-comment-id="{{ comment.id }}">Translate</button>
+                                        </div>
+       
+                                        <!-- Display more comment details as needed -->
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% else %}
+                                <p>No comments yet.</p>
+                                {% endif %}
+                                </div> 
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No posts found.</p>
+                    {% endif %}
+                </div>
+                                    
+                                </div>
+
+<!-- JavaScript for Accordion -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var accordions = document.getElementsByClassName("accordion");
+        for (var i = 0; i < accordions.length; i++) {
+            accordions[i].addEventListener("click", function() {
+                console.log("Accordion clicked"); 
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    });
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to handle translate button clicks
+        function handleTranslateClick(event) {
+            var commentId = event.target.getAttribute('data-comment-id');
+            fetch(`/postgram/translate_comment/${commentId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Replace the comment text with the translated text
+                    var commentElement = event.target.parentElement;
+                    commentElement.textContent = data.translated_text;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    
+      
+    
+        // Add event listeners to the translate and cyberbullying buttons
+        document.querySelectorAll('.translate-btn').forEach(button => {
+            button.addEventListener('click', handleTranslateClick);
+        });
+    
+       
+    });
+    
+    
+</script>
+</body>
+</html>

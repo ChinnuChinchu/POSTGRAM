@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Gram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        {% comment %} .background-image{
+            background-image: url('/media/images/pic1.png'); 
+            background-size: cover; 
+            background-position: center; 
+        } {% endcomment %}
+        header {
+            background-color: black;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+
+
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: purple; /* Changed color to purple */
+            padding: 10px 0;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .post {
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .post h2 {
+            margin-top: 0;
+        }
+        .post img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Post-Gram</h1> <!-- Changed title to "Post-Gram" -->
+    </header>
+    <nav>
+        <a href="http://127.0.0.1:8000/postgram/">Home</a>
+        <a href="http://127.0.0.1:8000/postgram/register/">Register</a>
+        <a href="http://127.0.0.1:8000/postgram/login/">Login</a>
+    </nav>
+    
+    <div class="background-image">
+
+    <div class="container">
+      <h2>Welcome to PostGram</h2>
+      <p>PostGram is a social media platform where you can share your thoughts, experiences, and photos with friends and followers.</p>
+  
+      <p>If you haven't already, <a href="http://127.0.0.1:8000/postgram/register/">sign up</a> or <a href="http://127.0.0.1:8000/postgram/login/">login</a> to join our community and start posting!</p>
+  
+      <!-- Sign Up Form -->
+      <div id="signup" style="display: none;">
+          <h2>Sign Up</h2>
+          <form action="#" method="post">
+              <input type="text" name="username" placeholder="Username">
+              <input type="email" name="email" placeholder="Email">
+              <input type="password" name="password" placeholder="Password">
+              <button type="submit">Sign Up</button>
+          </form>
+      </div>
+  
+      <!-- Login Form -->
+      <div id="login" style="display: none;">
+          <h2>Login</h2>
+          <form action="#" method="post">
+              <input type="text" name="username" placeholder="Username">
+              <input type="password" name="password" placeholder="Password">
+              <button type="submit">Login</button>
+          </form>
+      </div>
+  
+      <!-- Image of the user -->
+      <img src="https://via.placeholder.com/150" alt="User Image" style="display: none;">
+  
+      <!-- Images -->
+      <div class="images">
+        <img src="/media/images/pic1.png" alt="Image 1" height="400px" weight="400px">
+        
+    </div>
+  </div>
+  
+</div>
+  
+
+</body>
+</html>

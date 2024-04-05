@@ -80,5 +80,11 @@
              <a href="http://127.0.0.1:8000/postgram/forgot-pasword/">Forgot Password?</a>
         </div>
     </div>
+    {% if message %}
+<script>
+    alert("{{ message }}");
+</script>
+{% endif %}
+
 </body>
 </html>

@@ -41,6 +41,7 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     warnings = models.IntegerField(default=0)
+    account=models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

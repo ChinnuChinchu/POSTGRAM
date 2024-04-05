@@ -42,6 +42,16 @@ def register(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
+        
+        
+        # Check if user's profile has been warned due to cyberbullying
+        try:
+            profile = Profile.objects.get(user__email=email)
+            if profile.warnings >= 2:
+                messages.error(request, 'You have been banned due to cyberbullying. Please contact support for further assistance.')
+                return redirect('register')
+        except Profile.DoesNotExist:
+            pass
 
         # Check if username or email already exists
         if User.objects.filter(username=username).exists():
@@ -76,14 +86,52 @@ def register(request):
 
 
 
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+
+#         user = authenticate(request, username=username, password=password)
+            
+#         if user is not None:
+#             check = get_object_or_404(Profile, user=user.id)
+            
+#             if check.account == 1:
+#                 context = {
+#                 'message': 'Your comment has been detected as containing cyberbullying. Please refrain from such behavior.',
+#                 }
+#                 return render(request, 'login.html', context)
+#             else:
+#             # User authentication successful, log in the user
+#                login(request, user)
+#             return redirect('h')  # Redirect to the home page after login
+#         else:
+#             # Invalid login credentials
+#             return render(request, 'login.html', {'error_message': 'Invalid username or password'})
+
+#     return render(request, 'login.html')
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-
+            
         if user is not None:
+            try:
+                profile = Profile.objects.get(user=user)
+                if profile.warnings >= 2:
+                    
+                    delc=  Comment.objects.filter(name=user)
+                    for i in delc:
+                        i.delete()
+                    context = {
+                        'message': 'Your account has been banned due to cyberbullying. Please contact support for further assistance.'
+                    }
+                    return render(request, 'login.html', context)
+            except Profile.DoesNotExist:
+                pass
+
             # User authentication successful, log in the user
             login(request, user)
             return redirect('h')  # Redirect to the home page after login
@@ -289,8 +337,9 @@ def add_comment(request, post_id):
                     'email':user.email,
                 }
                 # Remove the user
-                user.delete()
-                
+                post = get_object_or_404(Profile, user=user.id)
+                post.account = 1 
+                post.save()
                 # Send an email to the police station
                 police_subject = 'Cyberbullying Report:Requesting Police Intervention'
                 police_message = f'A user has been detected for cyberbullying and has been deleted from POSTGRAM website.\n\nUser Data:\n{user_data}'
